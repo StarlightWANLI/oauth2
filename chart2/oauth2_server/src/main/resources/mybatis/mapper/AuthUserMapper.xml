@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laowan.oauth.server.oauth2_server.mapper.AuthUserMapper" >
+  <resultMap id="BaseResultMap" type="com.laowan.oauth.server.oauth2_server.model.AuthUser" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <select id="selectByUsername" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            auth_user t
+        WHERE
+            t.username = #{username}
+  </select>
+</mapper>

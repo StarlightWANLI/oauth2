@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="mybatis/generator/config.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 这里的插件配置一定要注意，稍微错误点，就会出现 generator.MapperPlugin不能实例化的异常-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <!-- tk.mybatis.mapper.common.Mapper-->
+            <property name="mappers" value="com.wxswj.common.base.BaseMapper"/>
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="${targetModelPackage}" targetProject="${targetJavaProject}"/>
+
+        <sqlMapGenerator targetPackage="${targetXMLPackage}" targetProject="${targetResourcesProject}"/>
+
+        <javaClientGenerator targetPackage="${targetMapperPackage}" targetProject="${targetJavaProject}"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${tableName}" schema="${schema}">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <!--<ignoreColumn column="id"></ignoreColumn>-->
+            <!--<generatedKey  type="pre"  column="id" sqlStatement="${sqlStatement}"></generatedKey>-->
+
+        </table>
+    </context>
+</generatorConfiguration>

@@ -25,8 +25,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  * @author: wanli
  * @create: 2019-05-22 16:00
  **/
-//@EnableAuthorizationServer
-//@Configuration
+@EnableAuthorizationServer
+@Configuration
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -111,7 +111,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
         userDetailsService.createUser(User.withUsername("user1").password("{noop}123456")
                 .authorities("ROLE_USER").build());
-        userDetailsService.createUser(User.withUsername("user2").password("{noop}1234567")
+        userDetailsService.createUser(User.withUsername("user2").password("{noop}123456")
                 .authorities("ROLE_USER").build());
         return userDetailsService;
     }

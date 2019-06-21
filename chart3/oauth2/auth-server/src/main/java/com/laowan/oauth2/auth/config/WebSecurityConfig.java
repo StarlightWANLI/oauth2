@@ -26,11 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/**").fullyAuthenticated().and().httpBasic();  //拦截所有请求 通过httpBasic进行认证
     }
 
-/*    @Override
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}123456").roles("USER")
                 .and()
                 .withUser("admin").password("{noop}123456").roles("USER","ADMIN");
-    }*/
+    }
 }

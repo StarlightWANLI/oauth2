@@ -9,8 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 public class HelloController {
 
     @GetMapping("/index")
-    public String welcome(String code) {
-        return "欢迎来到王者峡谷！获取的授权码是"  +  code;
+    public String welcome() {
+        return "欢迎来到王者峡谷！";
+    }
+
+    @GetMapping("/back")
+    public String back(String code) {
+        return "client系统授权回调，授权码是：" + code;
     }
 
 }

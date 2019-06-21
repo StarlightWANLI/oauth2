@@ -67,8 +67,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()                  // 使用in-memory存储客户端信息
                 .withClient("client")       // client_id
                 .secret("{noop}123456")                   // client_secret
-                .redirectUris("http://localhost:8100/index")     //应该是客户端内部自己的地址,用来接收返回的授权码，进行接下来的请求
+                .redirectUris("http://localhost:8100/back")     //应该是客户端内部自己的地址,用来接收返回的授权码，进行接下来的请求
                  .authorizedGrantTypes("authorization_code","password","client_credentials","refresh_token","implicit")// 该client允许的授权类型
+                .scopes("app")                                   // 允许的授权范围
+                .accessTokenValiditySeconds(accessTokenValiditySeconds)  //有效期时间
+                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
+        .and()
+                .withClient("order")       // client_id
+                .secret("{noop}123456")                   // client_secret
+                .redirectUris("http://localhost:8220/back")     //应该是客户端内部自己的地址,用来接收返回的授权码，进行接下来的请求
+                .authorizedGrantTypes("authorization_code","password","client_credentials","refresh_token","implicit")// 该client允许的授权类型
                 .scopes("app")                                   // 允许的授权范围
                 .accessTokenValiditySeconds(accessTokenValiditySeconds)  //有效期时间
                 .refreshTokenValiditySeconds(refreshTokenValiditySeconds)

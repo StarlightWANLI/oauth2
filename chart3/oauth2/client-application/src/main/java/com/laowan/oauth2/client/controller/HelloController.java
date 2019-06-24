@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class HelloController {
 
+    @GetMapping
+    public String main() {
+        return "欢迎来到王者峡谷！";
+    }
+
+
     @GetMapping("/index")
     public String welcome() {
         return "欢迎来到王者峡谷！";
@@ -17,5 +23,8 @@ public class HelloController {
     public String back(String code) {
         return "client系统授权回调，授权码是：" + code;
     }
+
+
+
 
 }

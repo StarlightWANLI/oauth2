@@ -15,6 +15,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 // 禁用 CSRF 跨站伪造请求，便于测试
                         csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
                 // 验证所有请求
                 .authorizeRequests()
                 //允许访问的放在之前才有效,放开back是为了接收授权码，通过授权码获取token，然后获取资源服务器信息
@@ -23,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 //允许访问首页
                 // .antMatchers("/","/login").permitAll()
+                .and()// 设置登出URL为 /logout
+                .formLogin().successForwardUrl("/index")
                 .and()
                 // 设置登出URL为 /logout
                 .logout().logoutUrl("/logout").permitAll()

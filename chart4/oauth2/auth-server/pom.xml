@@ -18,6 +18,17 @@
         <scope>runtime</scope>
     </dependency>
 
+    <!--  cache   spring boot下的cache相关注解使用 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-cache</artifactId>
+    </dependency>
+    <!--  redis -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
     <!--mybatis-->
     <dependency>
         <groupId>org.mybatis.spring.boot</groupId>
@@ -29,6 +40,21 @@
         <artifactId>mybatis-generator-core</artifactId>
         <version>1.3.6</version>
     </dependency>
+
+
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>1.2.58</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.esotericsoftware/kryo -->
+    <dependency>
+        <groupId>com.esotericsoftware</groupId>
+        <artifactId>kryo</artifactId>
+        <version>4.0.2</version>
+    </dependency>
+
 </dependencies>
 
 <build>

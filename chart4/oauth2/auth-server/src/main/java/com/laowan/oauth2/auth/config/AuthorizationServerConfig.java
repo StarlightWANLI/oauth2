@@ -6,9 +6,14 @@ import com.laowan.oauth2.auth.mapper.AuthUserMapper;
 import com.laowan.oauth2.auth.model.AuthUser;
 import com.laowan.oauth2.auth.model.AuthPermission;
 import com.laowan.oauth2.auth.model.AuthRole;
+import com.laowan.oauth2.auth.service.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCache;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,6 +25,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -38,6 +44,7 @@ import java.util.stream.Collectors;
  **/
 @EnableAuthorizationServer
 @Configuration
+@Slf4j
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -49,6 +56,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     AuthRoleMapper authRoleMapper;
     @Autowired
     AuthPermissionMapper authPermissionMapper;
+
+    @Autowired
+    RedisCacheManager redisCacheManager;
+
+    @Autowired
+    RedisService redisService;
 
 
     // accessToken有效期
@@ -124,11 +137,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 
     @Bean
-    public AuthenticationProvider daoAuhthenticationProvider() {
+    public AuthenticationProvider daoAuhthenticationProvider()  {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService());
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         daoAuthenticationProvider.setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+
+        //实现User信息的缓存
+        try {
+            // ConcurrentMap<String, Cache>   根据名称获取缓存对象
+          //  daoAuthenticationProvider.setUserCache(new SpringCacheBasedUserCache(redisCacheManager.getCache("redis")));
+            daoAuthenticationProvider.setUserCache(new MyUserCache(redisService));
+        } catch (Exception e) {
+           log.error("出现异常,{}",e);
+        }
         return daoAuthenticationProvider;
     }
 

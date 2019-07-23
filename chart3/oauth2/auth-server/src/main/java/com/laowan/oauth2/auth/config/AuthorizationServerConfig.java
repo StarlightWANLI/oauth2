@@ -129,6 +129,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         daoAuthenticationProvider.setUserDetailsService(userDetailsService());
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         daoAuthenticationProvider.setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+
         return daoAuthenticationProvider;
     }
 

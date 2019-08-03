@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laowan.oauth2.auth.mapper.AuthPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.laowan.oauth2.auth.model.AuthPermission" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="TINYINT" />
+  </resultMap>
+
+  <select id="selectByRoles"  resultMap="BaseResultMap">
+          SELECT
+                  a.*
+          FROM
+          auth_permission a INNER JOIN  auth_role_permission b ON a.id = b.permission_id
+          WHERE
+          b.role_id IN
+          <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                     #{item.id}
+           </foreach>
+  </select>
+
+</mapper>

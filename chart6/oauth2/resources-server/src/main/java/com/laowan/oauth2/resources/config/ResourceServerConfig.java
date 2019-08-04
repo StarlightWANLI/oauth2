@@ -3,20 +3,16 @@ package com.laowan.oauth2.resources.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.security.jwt.crypto.sign.*;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -26,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.security.KeyPair;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -115,16 +110,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         return null;
     }
 
-    public static void main(String[] args) {
-        RsaVerifier rsaVerifier =  new RsaVerifier("-----Begin Public Key-----\n" +
-                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhS1va39HWg+Qx5xSSOpQ22JW72isKQAP\n" +
-                "L6gyGzDWfgkRUUZzA1LyeXYy3m6VrKS1dL1gVdsMhFHm5zaujNsURWqT4eqcku47cGNwwStX8/+P\n" +
-                "DjYhrZbN3JKtEjkeioUx/tUmsFAGyy9JOpDeMP/t/mYJEkktvbZ5Z8DM5+cw//XUBmPVduh9K7t7\n" +
-                "YcXP7F5uhaZX4Ly1A19I71N4EI1i+ikMm7FNX4cwknFips775FTXNLyA175d900bw8Ys7jNVOiu3\n" +
-                "DCb0DGmn5E2mZB2vKY4ZYbQd+Z6J20wypPu9Ms08e2ItVMKrF9cWXO01WFjyqd2ZGeQQqpwebkob\n" +
-                "m7AdhwIDAQAB\n" +
-                "-----End Public Key-----");
-        log.info(rsaVerifier.toString());
-    }
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laowan.oauth2.auth.mapper.AuthRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.laowan.oauth2.auth.model.AuthRole" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+            a.*
+        FROM
+            auth_role a
+            INNER JOIN auth_user_role b
+        WHERE
+            a.id = b.role_id
+            AND b.user_id = #{userId}
+    </select>
+</mapper>
